@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="thanks.css">
+  
+  <title> Frontend Mentor | Newsletter sign-up form with success message </title>
+</head>
+<body>
+
+    <div class="newsletter-wrapper">
+
+        <div class="icon-wrapper mb-2">
+            <img src="./assets/images/icon-success.svg" alt="" srcset="">
+        </div>
+
+        <h1 class="newsletter-title mb-2"> Thanks for subscribing! </h1>
+
+        <p class="confirmation-desc mb-2">
+            A confirmation email has been sent to 
+            <strong id="userEmail"> ?</strong>.
+            Please open it and click the button inside to confirm your subscription.            
+        </p>
+
+        <form id="newsletterFrom" class="newsletter-form">    
+            <input id="dismissMessage" class="submit-input" type="submit" value="Dismiss message">
+        </form>        
+    </div>
+
+    <script>
+        const dismissMessage = document.getElementById( 'dismissMessage' ); 
+
+        let getUser = JSON.parse( sessionStorage.getItem( 'userEmail' ) );
+        
+        if ( getUser ) {
+            const userEmail = document.getElementById( 'userEmail' );
+            userEmail.textContent = getUser.userEmail;
+        } else {
+            window.location.href = 'index.html';
+        };
+
+
+        function preventSubmit( e ) {
+            e.preventDefault();
+        };
+        newsletterFrom.addEventListener( 'submit', preventSubmit );
+
+        dismissMessage.addEventListener( 'click', () => {
+            sessionStorage.removeItem( 'userEmail' );
+
+            let position = window.location.href;
+            let splitted = position.split( '/' );
+            let spliced = splitted.splice( splitted.length - 1 );
+            
+            window.location.href = splitted.join( '/' ) + '/index.html';
+        } );
+
+    </script>
+
+</body>
+</html>
